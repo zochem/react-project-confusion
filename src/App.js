@@ -20,7 +20,7 @@ class App extends Component {
         <NavbarBrand href="/">Ristorante Con Fusion</NavbarBrand>
       </div>
     </Navbar>
-    <Menu dishes={this.state.dishes} w/>
+    <Menu dishes={this.state.dishes} />
   </div>
   );
 }
