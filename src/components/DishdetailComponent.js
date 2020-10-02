@@ -28,7 +28,7 @@ class DishDetail extends Component{
             return comments.map(comment => {
                 return(<ul key={comment.id} className="list-unstyled">
                     <li className="mb-2">{comment.comment}</li>
-                    <li>-- {comment.author}, {this.formatDate(comment.date)}</li>
+                    <li>-- {comment.author}, { Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}</li>
                     <br />
                 </ul>)
             })
@@ -38,17 +38,18 @@ class DishDetail extends Component{
         }
     }
 
-    formatDate = date => {
-        const option = {year: 'numeric', month: 'short', day: 'numeric' };
-        date = new Date(date).toLocaleDateString('en-Us', option);
-        return date; 
-    }
-
     render() {
+        console.log(this);
         const {dish} = this.props;
+        if(dish !== undefined){
             return(    
-                this.renderDish(dish)
+                <div className="container">
+                    {this.renderDish(dish)}
+                </div>
             );
+        }
+        else 
+            return(<div></div>)
         }
 }
 
