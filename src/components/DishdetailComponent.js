@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {Card, CardImg, CardText, CardTitle, CardBody} from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-class DishDetail extends Component{
-    renderDish = dish => {
+function RenderDish ({dish}) {
+    console.log(dish);
             return (
                 <div className="row">
                     <div className="col-12 col-md-5 m-1">
@@ -17,13 +17,14 @@ class DishDetail extends Component{
                     </div>
                     <div className="col-12 col-md-5 m-1">
                         <h4>Comments</h4>
-                        {this.renderComments(dish.comments)}
+                        <RenderComments comments={dish.comments} />
                     </div>
                 </div>
             );
     };
 
-    renderComments = comments => {
+function RenderComments ({comments}) {
+    console.log(comments);
         if(comments !== null){
             return comments.map(comment => {
                 return(<ul key={comment.id} className="list-unstyled">
@@ -38,19 +39,16 @@ class DishDetail extends Component{
         }
     }
 
-    render() {
-        console.log(this);
-        const {dish} = this.props;
-        if(dish !== undefined){
+const DishDetail = props => {
+        if(props.dish !== undefined){
             return(    
                 <div className="container">
-                    {this.renderDish(dish)}
+                    <RenderDish dish={props.dish} />
                 </div>
             );
         }
         else 
             return(<div></div>)
-        }
 }
 
 
