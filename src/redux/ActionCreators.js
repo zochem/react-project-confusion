@@ -25,8 +25,7 @@ export const addDishes = (dishes) => ({
     payload: dishes,
 });
 
-export const fetchDishes = () => (dispatch) => {
-    
+export const fetchDishes = () => (dispatch) => {   
     dispatch(dishesLoading(true));
 
     setTimeout(() => {
