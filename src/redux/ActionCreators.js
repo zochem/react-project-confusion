@@ -1,6 +1,5 @@
 import * as ActionTypes from './ActionTypes';
 import {baseUrl} from '../shared/baseUrl';
-import {DISHES} from '../shared/dishes';
 
 export const addComment = (dishId, rating, author, comment) => ({
     type: ActionTypes.ADD_COMMENT,
@@ -31,8 +30,21 @@ export const fetchDishes = () => (dispatch) => {
 
 
     return fetch(baseUrl + 'dishes')
+            .then(res => {
+                if(res.ok)
+                    return res;
+                else{
+                    let err = new Error('Error ' + res.status + ': ' + res.statusText);
+                    err.response = res;
+                    throw err;
+                }
+            }, err => {
+                let errMess = new Error(err.message);
+                throw errMess;
+            })
             .then(res => res.json())
-            .then(data => dispatch(addDishes(data)));
+            .then(data => dispatch(addDishes(data)))
+            .catch(err => dispatch(dishesFailed(err.message)));
 }
 
 export const addComments = (comments) => ({
@@ -47,8 +59,20 @@ export const commentsFailed = (errMsg) => ({
 
 export const fetchComments = () => (dispatch) => {
     return fetch(baseUrl + 'comments')
-            .then(res => res.json())
-            .then(data => dispatch(addComments(data)));
+            .then(res => {
+                if(res.ok)
+                    return res.json()
+                else{
+                    let err = new Error('Error' + res.status + ': ' + res.statusText);
+                    err.response = res; 
+                    throw err; 
+                }
+            }, err => {
+                let errMess = new Error(err.message);
+                throw errMess; 
+            })
+            .then(data => dispatch(addComments(data)))
+            .catch(err => dispatch(commentsFailed(err.message)));
 };
 
 export const addPromos = (promos) => ({
@@ -69,6 +93,17 @@ export const fetchPromos = () => (dispatch) => {
     dispatch(promosLoading(true)); 
 
     return fetch(baseUrl + 'promotions')
-            .then(res => res.json())
-            .then(data => dispatch(addPromos(data)));
+            .then(res => {
+                if(res.ok) return res.json();
+                else{
+                    let err = new Error('Error ' + res.status + ': ' + res.statusText);
+                    err.response = res; 
+                    throw err; 
+                }
+            }, err => {
+                let errMess = new Error(err.message);
+                throw errMess;
+            })
+            .then(data => dispatch(addPromos(data)))
+            .catch(err => dispatch(promosFailed(err.message)));
 }
