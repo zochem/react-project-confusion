@@ -70,7 +70,7 @@ class Contact extends Component{
                                     <Label htmlFor="firstname" md={2}> First Name</Label>
                                     <Col>
                                         <Control.text model=".firstname" id="firstname" name="firstname" placeholder="First name"
-                                            className="form-control"
+                                            className="form-control" persist={true}
                                             validators={{
                                                 required,
                                                 minLength: minLength(3), 
@@ -92,7 +92,7 @@ class Contact extends Component{
                                     <Label htmlFor="lastname" md={2}> First Name</Label>
                                     <Col>
                                         <Control.text model=".lastname" id="lastname" name="lastname" placeholder="Last name"
-                                            className="form-control"
+                                            className="form-control" persist={true}
                                             validators={{
                                                 required,
                                                 minLength: minLength(3), 
@@ -117,7 +117,7 @@ class Contact extends Component{
                                         <Col md={10}>
                                             <Control.text model=".telnum" id="telnum" name="telnum"
                                                 className="form-control"
-                                                placeholder="Tel. number"
+                                                placeholder="Tel. number" persist={true}
                                                 validators={{
                                                     required,
                                                     minLength: minLength(3), 
@@ -143,7 +143,7 @@ class Contact extends Component{
                                     <Col md={10}>
                                         <Control.text model=".email" id="email" name="email"
                                                 placeholder="email"  
-                                                className="form-control"
+                                                className="form-control" persist={true}
                                                 validators={{
                                                     required,
                                                     validEmail
