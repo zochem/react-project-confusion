@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Breadcrumb, BreadcrumbItem, Button, Row, Label, Col} from 'reactstrap';
 import {Link} from 'react-router-dom';
+//eslint-disable-next-line
 import {Control, Form, Errors, actions} from 'react-redux-form'
 
 const required = (val) => val && val.length;
@@ -17,8 +18,7 @@ class Contact extends Component{
     }
 
     handleSubmit(values) {
-        console.log('Current state: ' + JSON.stringify(values));
-        alert('State is: ' + JSON.stringify(values));
+        this.props.postFeedback(values);
         this.props.resetFeedbackForm();
     }    
     

@@ -126,7 +126,7 @@ export const fetchPromos = () => (dispatch) => {
     return fetch(baseUrl + 'promotions')
             .then(res => {
                 if(res.ok) return res.json();
-                else{
+                else {
                     let err = new Error('Error ' + res.status + ': ' + res.statusText);
                     err.response = res; 
                     throw err; 
@@ -138,3 +138,69 @@ export const fetchPromos = () => (dispatch) => {
             .then(data => dispatch(addPromos(data)))
             .catch(err => dispatch(promosFailed(err.message)));
 }
+
+export const addLeaders = (leaders) => ({
+    type: ActionTypes.ADD_LEADERS, 
+    payload: leaders,
+})
+
+export const leadersLoading = () => ({
+    type: ActionTypes.LEADERS_LOADING,
+})
+
+export const leadersFailed = (errMsg) => ({
+    type: ActionTypes.LEADERS_FAILED,
+    payload: errMsg,
+})
+
+export const fetchLeaders = () => (dispatch) => {
+    dispatch(leadersLoading(false));
+
+    return fetch(baseUrl + 'leaders')
+            .then(res => {
+                if(res.ok) return res.json();
+                else {
+                    let err = new Error('Error ' + res.status + ': ' + res.statusText);
+                    err.response = res; 
+                    throw err;
+                }
+            }, err => {
+                let errMess = new Error(err.message);
+                throw errMess;
+            })
+            .then(data => dispatch(addLeaders(data)))
+            .catch(err => dispatch(leadersFailed(err.message)));
+}
+
+export const postFeedback = (values) => {
+    const newFeedback = {...values};
+
+    newFeedback.date = new Date().toISOString();
+
+    alert('newFeedback\n' + JSON.stringify(newFeedback));
+
+    return fetch(baseUrl + 'feedback', {
+        method: 'POST',
+        body: JSON.stringify(newFeedback),
+        headers: {
+            'Content-type': 'application/json',
+        },
+        credentials: 'same-origin',
+    })
+        .then(res => {
+            if (res.ok) return res.json();
+            else{
+                let err = new Error('Error '+ res.status + ': ' + res.statusText);
+                err.response = res; 
+                throw err;
+            }
+        }, err => {
+            let errMess = new Error(err.message);
+            throw errMess; 
+        })
+        .then(data => alert('Thank you for your feedback!' + JSON.stringify(data)))
+        .catch(err => {
+            console.log('POST Feedback', err.message);
+            alert('Your feedback was not sent due to: ' + err.message);
+        })
+    }

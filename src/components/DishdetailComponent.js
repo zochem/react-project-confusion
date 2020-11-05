@@ -128,15 +128,15 @@ function RenderComments ({comments, postComment, dishId}) {
                     <div className="col-12 col-md-5 m-1">
                         <h4>Comments</h4>
                         {comments.map(comment => (
-                        <ul key={comment.id} className="list-unstyled">
                             <Stagger in>
+                        <ul key={comment.id} className="list-unstyled">
                                 <Fade in>
                                     <li className="mb-2">{comment.comment}</li>
                                     <li>-- {comment.author}, { Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}</li>
                                     <br />
                                 </Fade>
-                            </Stagger>
                         </ul>
+                        </Stagger>
                         ))}
                         <CommentForm dishId={dishId} postComment={postComment}/>
                     </div>
